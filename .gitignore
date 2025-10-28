@@ -1,0 +1,4 @@
+# Archivos temporales de Visual Studio
+.vs/
+bin/
+obj/
