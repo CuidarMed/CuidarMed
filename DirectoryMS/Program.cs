@@ -5,7 +5,6 @@ using Infraestructure.Persistence;
 using Infraestructure.Queries;
 using Infrastructure.Command;
 using Infrastructure.Queries;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Localization;
 using System.Globalization;
@@ -67,7 +66,7 @@ using (var scope = app.Services.CreateScope())
     var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
 
     const int maxRetries = 10;
-    for(var attempt = 1; attempt <= maxRetries; attempt++)
+    for (var attempt = 1; attempt <= maxRetries; attempt++)
     {
         try
         {
@@ -76,10 +75,10 @@ using (var scope = app.Services.CreateScope())
             logger.LogInformation("Migrations applied successfully.");
             break;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             logger.LogError(ex, "An error occurred while applying migrations on attempt {Attempt} of {MaxRetries}", attempt, maxRetries);
-            if(attempt == maxRetries)
+            if (attempt == maxRetries)
             {
                 logger.LogCritical("Max migration attempts reached. Exiting application.");
                 throw;

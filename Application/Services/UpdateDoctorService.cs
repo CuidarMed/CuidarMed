@@ -14,7 +14,7 @@ namespace Application.Services
             _doctorQuery = doctorQuery;
         }
 
-        public async Task<UpdateDoctorResponse> UpdateDoctorAsync(long id, UpdateDoctorRequest request)
+        public async Task<DoctorResponse> UpdateDoctorAsync(long id, UpdateDoctorRequest request)
         {
             // Buscar el doctor existente
             var doctor = await _doctorQuery.GetByIdAsync(id);
@@ -40,7 +40,7 @@ namespace Application.Services
             var updatedDoctor = await _doctorCommand.UpdateAsync(doctor);
 
             // Retornar respuesta
-            return new UpdateDoctorResponse
+            return new DoctorResponse
             {
                 FirstName = updatedDoctor.FirstName,
                 LastName = updatedDoctor.LastName,
