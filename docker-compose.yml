@@ -1,7 +1,10 @@
 services:
   sql:
     image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: directory_sql
+    build:
+      context: .
+      dockerfile: Dockerfile.sql
+    container_name: sql
     environment:
       SA_PASSWORD: "SecurePassword123!"
       ACCEPT_EULA: "Y"
@@ -9,27 +12,29 @@ services:
       - "1433:1433"
     networks:
       - cuidarmed_net
-    volumes:
-      - sql_data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD", "sqlcmd", "-S", "localhost", "-U", "sa", "-P", "SecurePassword123!", "-Q", "SELECT 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
 
   directoryms:
     build:
       context: .
       dockerfile: DirectoryMS/Dockerfile
     container_name: directoryms_api
+    depends_on:
+      sql:
+        condition: service_healthy
     environment:
       ConnectionStrings__DefaultConnection: "Server=sql,1433;Database=DirectoryMS;User Id=sa;Password=SecurePassword123!;Encrypt=True;TrustServerCertificate=True"
       ASPNETCORE_ENVIRONMENT: "Development"
       ASPNETCORE_URLS: "http://+:8080"
     ports:
       - "8080:8080"
-    depends_on:
-      - sql
     networks:
       - cuidarmed_net
-
-volumes:
-  sql_data: {}
 
 networks:
   cuidarmed_net:
