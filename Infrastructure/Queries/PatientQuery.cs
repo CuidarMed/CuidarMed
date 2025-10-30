@@ -2,11 +2,6 @@
 using Domain.Entities;
 using Infraestructure.Persistence;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Queries
 {
@@ -21,9 +16,7 @@ namespace Infrastructure.Queries
 
         public async Task<Patient> getPatientById(long id)
         {
-            Patient? patient = await _context.Patients.AsNoTracking()
-                                .FirstOrDefaultAsync(p => p.PatientId == id);
-
+            var patient = await _context.Patients.FirstOrDefaultAsync(p => p.PatientId == id);
             return patient;
         }
     }

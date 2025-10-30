@@ -1,12 +1,6 @@
 ﻿using Application.DTOs.Patients;
 using Application.Exceptions;
 using Application.Interfaces;
-using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Services
 {
@@ -25,34 +19,43 @@ namespace Application.Services
         {
             var patient = await _query.getPatientById(id);
 
-            if (patient == null) {
+            if (patient == null)
                 throw new BadRequestException("Paciente no encontrado");
-            }
 
-            if (!string.IsNullOrEmpty(request.Name))
+            //  Actualiza todos los campos si el valor no es nulo (permite limpiar campos)
+            if (request.Name != null)
                 patient.Name = request.Name;
 
-            if (!string.IsNullOrEmpty(request.LastName))
+            if (request.LastName != null)
                 patient.LastName = request.LastName;
 
-            if(!string.IsNullOrEmpty(request.Adress))
+            if (request.Dni.HasValue)
+                patient.Dni = request.Dni.Value;
+
+            if (request.Adress != null)
                 patient.Adress = request.Adress;
 
-            if (!string.IsNullOrEmpty(request.HealthPlan))
+            if (request.DateOfBirth.HasValue)
+                patient.DateOfBirth = request.DateOfBirth.Value;
+
+            if (request.HealthPlan != null)
                 patient.HealthPlan = request.HealthPlan;
 
-            var updatePatient = await _command.updatePatient(patient);
+            if (request.MembershipNumber != null)
+                patient.MembershipNumber = request.MembershipNumber;
 
-            return new PatientResponse { 
-                PatientId = id,
-                Name = updatePatient.Name,
-                LastName = updatePatient.LastName,
-                Dni = updatePatient.Dni,
-                Adress = updatePatient.Adress,
-                DateOfBirth = updatePatient.DateOfBirth,
-                HealthPlan = updatePatient.HealthPlan,
-                MembershipNumber = updatePatient.MembershipNumber,
-                UserId = updatePatient.UserId,
+            var updatedPatient = await _command.updatePatient(patient);
+
+            return new PatientResponse
+            {
+                PatientId = updatedPatient.PatientId,
+                Name = updatedPatient.Name,
+                LastName = updatedPatient.LastName,
+                Dni = updatedPatient.Dni,
+                Adress = updatedPatient.Adress,
+                DateOfBirth = updatedPatient.DateOfBirth,
+                HealthPlan = updatedPatient.HealthPlan,
+                MembershipNumber = updatedPatient.MembershipNumber
             };
         }
     }

@@ -4,6 +4,6 @@ namespace Application.Interfaces
 {
     public interface IUpdateDoctorService
     {
-        Task<UpdateDoctorResponse> UpdateDoctorAsync(long id, UpdateDoctorRequest request);
+        Task<DoctorResponse> UpdateDoctorAsync(long id, UpdateDoctorRequest request);
     }
 }
