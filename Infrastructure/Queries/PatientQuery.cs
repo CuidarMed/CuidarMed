@@ -19,6 +19,11 @@ namespace Infrastructure.Queries
             _context = context;
         }
 
+        public async Task<List<Patient>> getAllPatient()
+            => await _context.Patients.AsNoTracking()
+                        .ToListAsync();
+        
+
         public async Task<Patient> getPatientById(long id)
         {
             Patient? patient = await _context.Patients.AsNoTracking()

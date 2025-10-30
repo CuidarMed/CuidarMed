@@ -24,13 +24,6 @@ namespace Application.Services
 
         public async Task<PatientResponse> createaPatient(CreatePatientRequest p)
         {
-            var user = await _query.getPatientById(p.UserId);
-
-            if(user == null)
-            {
-                throw new NotFoundException("Usuario no encontrado");
-            }
-
             var newPatient = new Patient
             {
                 Dni = p.Dni.HasValue ? p.Dni.Value : 0,

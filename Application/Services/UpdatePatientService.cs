@@ -35,11 +35,20 @@ namespace Application.Services
             if (!string.IsNullOrEmpty(request.LastName))
                 patient.LastName = request.LastName;
 
+            if(request.Dni.HasValue)
+                patient.Dni = request.Dni.Value;
+
             if(!string.IsNullOrEmpty(request.Adress))
                 patient.Adress = request.Adress;
 
+            if (request.DateOfBirth.HasValue)
+                patient.DateOfBirth = request.DateOfBirth.Value;
+
             if (!string.IsNullOrEmpty(request.HealthPlan))
                 patient.HealthPlan = request.HealthPlan;
+
+            if(!string.IsNullOrEmpty(request.MembershipNumber))
+                patient.MembershipNumber = request.MembershipNumber;
 
             var updatePatient = await _command.updatePatient(patient);
 

@@ -9,6 +9,7 @@ namespace Application.Interfaces
 {
     public interface IPatientQuery
     {
+        Task<List<Patient>> getAllPatient();
         Task<Patient> getPatientById(long id);
     }
 }

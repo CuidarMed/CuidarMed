@@ -26,6 +26,13 @@ namespace DirectoryMS.Controllers
             return new JsonResult(result);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> getAllPatient()
+        {
+            var result = await _searchPatientService.getAllPatient();
+            return new JsonResult(result);
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> getPacientById(long id)
         {

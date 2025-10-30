@@ -17,6 +17,27 @@ namespace Application.Services
         {
             _query = query;
         }
+
+        public async Task<List<PatientResponse>> getAllPatient()
+        {
+            var patients = await _query.getAllPatient();
+
+            var responce = patients.Select(p => new PatientResponse
+            {
+                PatientId = p.PatientId,
+                Name = p.Name,
+                LastName = p.LastName,
+                Dni = p.Dni,
+                Adress = p.Adress,
+                DateOfBirth = p.DateOfBirth,
+                HealthPlan = p.HealthPlan,
+                MembershipNumber = p.MembershipNumber,
+                UserId = p.UserId,
+            }).ToList();
+
+            return responce;
+        }
+
         public async Task<PatientResponse> getPatientById(long id)
         {
             var patient = await _query.getPatientById(id);

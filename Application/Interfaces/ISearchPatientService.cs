@@ -9,6 +9,7 @@ namespace Application.Interfaces
 {
     public interface ISearchPatientService
     {
+        Task<List<PatientResponse>> getAllPatient();
         Task<PatientResponse> getPatientById(long id);
     }
 }
