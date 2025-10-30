@@ -4,7 +4,10 @@ using Infraestructure.Command;
 using Infraestructure.Persistence;
 using Infraestructure.Queries;
 using Infrastructure.Command;
+<<<<<<< HEAD
 using Infrastructure.Convert;
+=======
+>>>>>>> 17a2014851cdcb1fb67016fa532ea7a625ede256
 using Infrastructure.Queries;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
